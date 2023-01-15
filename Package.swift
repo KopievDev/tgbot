@@ -1,10 +1,10 @@
-// swift-tools-version:5.4
+// swift-tools-version:5.2
 import PackageDescription
 
 let package = Package(
     name: "tgbot",
     platforms: [
-        .macOS(.v10_15)
+       .macOS(.v10_15)
     ],
     dependencies: [
         // 💧 A server-side Swift web framework.
@@ -17,6 +17,7 @@ let package = Package(
             dependencies: [
                 .product(name: "Vapor", package: "vapor"),
                 .product(name: "telegram-vapor-bot", package: "telegram-vapor-bot")
+                
             ],
             swiftSettings: [
                 // Enable better optimizations when building in Release configuration. Despite the use of
@@ -25,7 +26,7 @@ let package = Package(
                 .unsafeFlags(["-cross-module-optimization"], .when(configuration: .release))
             ]
         ),
-        .executableTarget(name: "Run", dependencies: [.target(name: "App")]),
+        .target(name: "Run", dependencies: [.target(name: "App")]),
         .testTarget(name: "AppTests", dependencies: [
             .target(name: "App"),
             .product(name: "XCTVapor", package: "vapor"),
