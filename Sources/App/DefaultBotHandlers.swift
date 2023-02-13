@@ -18,6 +18,7 @@ final class DefaultBotHandlers {
         defaultHandler(app: app, bot: bot)
         commandPingHandler(app: app, bot: bot)
 //        commandCatHandler(app: app, bot: bot)
+        commandStartHandler(app: app, bot: bot)
         commandPidrHandler(app: app, bot: bot)
     }
     
@@ -46,6 +47,13 @@ final class DefaultBotHandlers {
         bot.connection.dispatcher.add(handler)
     }
     
+    private static func commandStartHandler(app: Vapor.Application, bot: TGBotPrtcl) {
+        let handler = TGCommandHandler(commands: ["/start"]) { update, bot in
+            try? update.message?.reply(text: startText, bot: bot)
+        }
+        bot.connection.dispatcher.add(handler)
+    }
+    
     
     
     private static func defaultHandler(app: Vapor.Application, bot: TGBotPrtcl) {
@@ -65,3 +73,13 @@ final class DefaultBotHandlers {
         bot.connection.dispatcher.add(handler)
     }
 }
+
+let startText = """
+Дорогие друзья, для того чтобы рассказать свою историю и получить бесплатный кофе необходимо
+▪️нажать кнопку старт
+▪️написать вашу историю
+▪️мы проверим ее на плагиат
+▪️Если она уникальна мы ее опубликуем и оплатим рассказ ;)
+Для прохождения плагиата необходимо, чтобы Ваша история была размещена впервые в сети интернет и была уникальной.
+Не забывайте в конце подписать свой номер телефона или номер карты, чтобы мы могли направить вам ваше вознаграждение🤑
+"""
